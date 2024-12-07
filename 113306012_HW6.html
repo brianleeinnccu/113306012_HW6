@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+<style>
+	input{
+		border-radius: 10px;
+		padding: 5px 5px 5px 5px;
+	}
+	button{
+		margin-left: 5px;
+		background-color: orange;
+		padding: 5px 5px 5px 5px;
+		border-radius: 10px;
+	}
+	button:hover {
+
+            transform: scale(1.2); /* 當點到時放大1.2倍 */
+            background-color: orangered;
+        }
+</style>
+</head>
+<body>
+	<h1>113306012_HW6_1A2B</h1>
+	<span>
+		<input id = "getNumber" type="number" placeholder = "請輸入4個不重複的數字" name="number">
+		<button onclick='getInput()'>猜</button>
+	</span>
+	<h3>遊戲紀錄</h3>
+	<p id="gameLog"></p>
+	<script>
+		var target = Math.floor(Math.random() * 9000) + 1000;
+		target = target.toString();
+		while(new Set(target).size != 4){
+			target = Math.floor(Math.random() * 9000) + 1000;
+			target = target.toString();
+		}
+		console.log(target);
+		var attempts = 0;
+		function getInput() {
+            var input = document.getElementById("getNumber").value;
+            console.log(input);
+            if (input.length != 4 || new Set(input).size != 4){
+            	alert("請輸入4個不重複的數字");
+            	return;
+            }
+            attempts++;
+            var result = calculate(input,target);
+            document.getElementById("gameLog").innerHTML += `<p>第${attempts}次：${input} → ${result}</p>`;
+            document.getElementById("getNumber").value = "";
+        }
+        function calculate(input,target){
+        	var A = 0,B = 0;
+        	for(var i = 0;i < 4;i++){
+        		if (input[i] === target[i]){
+        			A++;
+        		}else if(target.includes(input[i])){
+        			B++;
+        		}
+        	}
+        	if (A === 4){
+        		alert("你答對了 ! 作答次數 : " + attempts);
+        	}
+        	return A + "A"+ B + "B";
+        }
+	</script>
+</body>
+</html>
